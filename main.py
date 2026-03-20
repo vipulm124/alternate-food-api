@@ -18,11 +18,12 @@ load_dotenv()
 
 SUPABASE_URL = str(os.environ.get("SUPABASE_URL"))
 SUPABASE_PUBLISHABLE_DEFAULT_KEY = str(os.environ.get("SUPABASE_PUBLISHABLE_DEFAULT_KEY"))
+ORIGIN=str(os.environ.get("ORIGIN"))
 
 
 app = FastAPI(title="Nutrition Assistant API")
 security = HTTPBearer()
-origins = ['http://localhost:5173']
+origins = [ORIGIN]
 
 
 app.add_middleware(CustomAuthMiddleware)
@@ -65,6 +66,12 @@ model = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 
 # Create the LangChain chain
 chain = prompt | model | parser
+
+@app.get('/test')
+def testing():
+    response = "This is a test endpoint"
+    print(response)
+    return {"response": response}
 
 @app.get("/analyze")
 async def analyze_food(

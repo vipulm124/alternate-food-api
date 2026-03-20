@@ -10,7 +10,7 @@ from supabase_handler import validate_token
 
 EXCLUDED_PATHS = [ "/docs",
     "/redocs",
-    "/openapi.json",'/login']
+    "/openapi.json",'/login' ,'/test']
 
 class CustomAuthMiddleware(BaseHTTPMiddleware):
     """
